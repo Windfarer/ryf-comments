@@ -5,7 +5,8 @@ name = "pypi"
 
 [packages]
 biu = "*"
-mongoengine = "*"
+wordcloud = "*"
+jieba = "*"
 
 [dev-packages]
 
