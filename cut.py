@@ -1,7 +1,9 @@
 import jieba
 import csv
 import jieba.analyse
-jieba.analyse.set_stop_words("stopwords.txt")
+
+stopwords = set(open("stopwords.txt").read().split('\n'))
+print(stopwords)
 
 def main():
     words = {}
@@ -15,6 +17,8 @@ def main():
             #     break
             content = i["content"]
             for w in jieba.cut(content, cut_all=False):
+                if w in stopwords:
+                    continue
                 if w not in words:
                     words[w] = 1
                     print(w)
