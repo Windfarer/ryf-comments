@@ -3,7 +3,7 @@ import csv
 
 class RYFProject(biu.Project):
     def before(self):
-        self.f = open("result.csv", 'w')
+        self.f = open("result.csv", 'w', newline='')
         self.csv_writer = csv.DictWriter(self.f, ["article_url", "user_name", "user_link", "content", "published_at"])
         self.csv_writer.writeheader()
 
@@ -46,7 +46,7 @@ http://www.ruanyifeng.com/blog/usenet/""".split('\n')
             if not name:
                 name = comment.xpath("div[@class='inner']/div[@class='comment-header']/div[@class='asset-meta']/p/span[@class='byline']/span[@class='vcard author']/text()").get()
             user_link = comment.xpath("div[@class='inner']/div[@class='comment-header']/div[@class='asset-meta']/p/span[@class='byline']/span[@class='vcard author']/a/@href").get()
-            content = comment.xpath("div[@class='inner']/div/p/text()").get()
+            content = comment.xpath("div[@class='inner']/div/p/text()").extract_first(default="").replace("\n", "")
             article_url = resp.url
             published_at = comment.xpath("div[@class='inner']/div[@class='comment-footer']/div[@class='comment-footer-inner']/p/abbr[@class='published']/text()").get()
             yield {
