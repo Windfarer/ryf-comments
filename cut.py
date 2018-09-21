@@ -1,9 +1,12 @@
 import jieba
 import csv
 import jieba.analyse
+import unicodedata
 
-stopwords = set(open("stopwords.txt").read().split('\n'))
-print(stopwords)
+stopwords = set()
+
+for i in open("stopwords.txt").read().split('\n'):
+    stopwords.add(unicodedata.normalize('NFC', i))
 
 def main():
     words = {}
@@ -17,6 +20,7 @@ def main():
             #     break
             content = i["content"]
             for w in jieba.cut(content, cut_all=False):
+                w = unicodedata.normalize('NFC', w)
                 if w in stopwords:
                     continue
                 if w not in words:
