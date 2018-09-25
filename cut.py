@@ -21,6 +21,9 @@ def main():
             content = i["content"]
             for w in jieba.cut(content, cut_all=False):
                 w = unicodedata.normalize('NFC', w)
+                w = w.strip()
+                if not w:
+                    continue
                 if w in stopwords:
                     continue
                 if w not in words:
